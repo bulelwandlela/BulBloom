@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user preferences and current focus areas.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "mainGoal": { "type": "string" },
+        "mandarinLevel": { "type": "string" },
+        "targetRole": { "type": "string" }
+      },
+      "required": ["userId"]
+    },
+    "LogEntry": {
+      "title": "Daily/Weekly Log",
+      "description": "Rich log containing journals, learning notes, and health stats.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "learningNotes": { "type": "string" },
+        "contributionsToGoal": { "type": "string" },
+        "moduleProgress": { "type": "object" },
+        "communicationStatus": { "type": "number" },
+        "comprehensionStatus": { "type": "number" },
+        "physicalHealth": { "type": "number" },
+        "mentalWellbeing": { "type": "number" },
+        "restTime": { "type": "number" },
+        "journalBody": { "type": "string" }
+      },
+      "required": ["userId", "date"]
+    },
+    "Goal": {
+      "title": "Aspirational Goal",
+      "description": "Long term target like becoming a Data Scientist.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["Professional", "Skill", "Personal"] },
+        "progress": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User specific configuration"
+    },
+    "/users/{userId}/logs/{logId}": {
+      "schema": "LogEntry",
+      "description": "Daily logs for the user"
+    },
+    "/users/{userId}/goals/{goalId}": {
+      "schema": "Goal",
+      "description": "Key life goals"
+    }
+  }
+}
